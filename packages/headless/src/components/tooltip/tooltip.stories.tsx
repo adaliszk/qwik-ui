@@ -1,16 +1,18 @@
+// noinspection JSUnusedGlobalSymbols
+
 import { Meta, StoryObj } from 'storybook-framework-qwik';
 import { Tooltip, TooltipProps } from './tooltip';
 
 export default {
-  component: Tooltip,
+  title: 'Headless/Tooltip',
 } as Meta<TooltipProps>;
 
 export const Primary: StoryObj<TooltipProps> = {
   args: {
     content: 'Hi there',
   },
-  render: () => (
-    <Tooltip>
+  render: (args) => (
+    <Tooltip {...args}>
       <button>Hello</button>
     </Tooltip>
   ),
