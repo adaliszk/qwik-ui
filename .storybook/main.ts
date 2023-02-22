@@ -2,20 +2,10 @@ import type { StorybookConfig } from 'storybook-framework-qwik';
 import type { UserConfig } from 'vite';
 
 import { qwikVite } from '@builder.io/qwik/optimizer';
-import viteTsConfigPaths from 'vite-tsconfig-paths';
+import compileTypescriptPaths from 'vite-tsconfig-paths';
 
 const config: StorybookConfig = {
-  stories: [
-    '../packages/**/*.stories.@(ts|tsx|mdx)',
-    '../packages/**/stories.@(ts|tsx|mdx)',
-    '../docs/**/*.mdx',
-  ],
-  core: {
-    builder: {
-      name: '@storybook/builder-vite',
-      options: {},
-    },
-  },
+  stories: ['../docs/**/*.stories.@(js|jsx|ts|tsx)', '../docs/**/*.mdx'],
   framework: {
     name: 'storybook-framework-qwik',
     options: {},
@@ -31,8 +21,13 @@ const config: StorybookConfig = {
     autodocs: true,
   },
   async viteFinal(config: UserConfig) {
-    config.plugins?.unshift(qwikVite({ srcDir: 'src' }));
-    config.plugins?.unshift(viteTsConfigPaths());
+    config.plugins?.unshift(
+      compileTypescriptPaths({
+        projects: ['.storybook/tsconfig.json'],
+      })
+    );
+
+    config.plugins?.unshift(qwikVite());
 
     config.server = config?.server ?? {};
     config.server.port = 6006;

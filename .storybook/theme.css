@@ -1,0 +1,11 @@
+#storybook-preview-wrapper {
+  background: #101010;
+}
+
+#storybook-explorer-searchfield {
+  border-color: #ac7ff4;
+}
+
+.sidebar-header a > img {
+  max-height: 41px;
+}
