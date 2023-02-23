@@ -1,0 +1,42 @@
+{
+  "private": false,
+  "name": "@qwik-ui/storybook",
+  "version": "0.0.0",
+  "description": "Qwik UI components library - Material theme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --minify --sourcemap --dts",
+    "fmt": "prettier --write .",
+    "fmt.check": "prettier --check .",
+    "release": "np"
+  },
+  "peerDependencies": {
+    "@storybook/addon-a11y": "^7.0.0-beta.53",
+    "@storybook/addon-docs": "^7.0.0-beta.53",
+    "@storybook/addon-essentials": "^7.0.0-beta.53",
+    "@storybook/addon-storysource": "^7.0.0-beta.53",
+    "@storybook/addon-links": "^7.0.0-beta.53",
+    "@storybook/builder-vite": "^7.0.0-beta.53",
+    "storybook": "^7.0.0-beta.53",
+    "storybook-framework-qwik": "^0.0.8"
+  },
+  "dependencies": {}
+}
