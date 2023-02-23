@@ -1,27 +1,35 @@
 import type { StorybookConfig } from 'storybook-framework-qwik';
 import type { UserConfig } from 'vite';
 
-import compileTypescriptPaths from 'vite-tsconfig-paths';
+import type { PluginOptions as TsConfigPathOptions } from 'vite-tsconfig-paths';
+import tsConfigPaths from 'vite-tsconfig-paths';
+
+import type { QwikVitePluginOptions } from '@builder.io/qwik/optimizer';
 import { qwikVite } from '@builder.io/qwik/optimizer';
 
 export interface CustomConfig extends StorybookConfig {
   /**
    * Configure custom base path to your documentation files
-   * @default docs
+   * @default ../docs (relative from .storybook folder)
    */
   docsDir?: string;
 
   /**
-   * Configure custom base path to look stories for
-   * @default src
+   * Configure custom base path to your component stories
+   * @default ../src (relative from .storybook folder)
    */
   storiesDir?: string;
 
   /**
    * Path to your TSConfig file
-   * @default tsconfig.json
+   * @default .storybook/tsconfig.json
    */
   tsconfig?: string;
+
+  /**
+   * Configure TSConfig Paths plugin
+   */
+  tspaths?: TsConfigPathOptions;
 
   /**
    * Set watching mode for Vite
@@ -38,7 +46,12 @@ export interface CustomConfig extends StorybookConfig {
   port?: number;
 
   /**
-   *
+   * Configure Qwik Vite Plugin
+   */
+  qwik?: QwikVitePluginOptions;
+
+  /**
+   * Configure Vite
    */
   vite?: UserConfig;
 }
@@ -61,10 +74,10 @@ export interface CustomConfig extends StorybookConfig {
 export function defineConfig(customConfig?: CustomConfig): StorybookConfig {
   return {
     stories: [
-      `${customConfig?.docsDir ?? 'docs'}/**/*.stories.@(js|jsx|ts|tsx)`,
-      `${customConfig?.docsDir ?? 'docs'}/**/*.mdx`,
-      `${customConfig?.storiesDir ?? 'src'}/**/*.stories.@(js|jsx|ts|tsx)`,
-      `${customConfig?.storiesDir ?? 'src'}/**/*.mdx`,
+      `${customConfig?.docsDir ?? '../docs'}/**/*.stories.@(js|jsx|ts|tsx)`,
+      `${customConfig?.docsDir ?? '../docs'}/**/*.mdx`,
+      `${customConfig?.storiesDir ?? '../src'}/**/*.stories.@(js|jsx|ts|tsx)`,
+      `${customConfig?.storiesDir ?? '../src'}/**/*.mdx`,
     ],
     framework: {
       name: 'storybook-framework-qwik',
@@ -81,22 +94,27 @@ export function defineConfig(customConfig?: CustomConfig): StorybookConfig {
       autodocs: 'tag',
     },
     ...(customConfig ?? {}),
-    viteFinal(config: UserConfig) {
-      // Extend the custom configuration with the storybook generated one
-      config = { ...(customConfig?.vite ?? {}), ...config };
-
-      // Add necessary plugins
-      config.plugins?.unshift(
-        compileTypescriptPaths({
-          projects: [customConfig?.tsconfig ?? 'tsconfig.json'],
+    async viteFinal(config: UserConfig) {
+      // Add Qwik parser
+      config.plugins.unshift(
+        qwikVite({
+          srcDir: '.storybook',
+          ...(customConfig?.qwik ?? {}),
         })
       );
-      config.plugins?.unshift(qwikVite());
+
+      // Add Typescript path resolution
+      config.plugins.unshift(
+        tsConfigPaths({
+          projects: [customConfig?.tsconfig ?? '.storybook/tsconfig.json'],
+          ...(customConfig?.tspaths ?? {}),
+        })
+      );
 
       // Configure the development server
-      config.server = customConfig?.vite.server ?? {};
+      config.server = customConfig?.vite?.server ?? config?.server ?? {};
       config.server.port =
-        customConfig?.port ?? customConfig?.vite.server?.port ?? 6006;
+        customConfig?.port ?? customConfig?.vite?.server?.port ?? 6006;
 
       // Configure watch mode, and as a default use fsevents
       config.server.watch = { useFsEvents: true };

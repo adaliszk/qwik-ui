@@ -27,7 +27,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/headless/**/*.{ts,tsx,js,jsx}"]
+        "lintFilePatterns": ["packages/storybook/**/*.{ts,tsx,js,jsx}"]
       }
     },
     "version-dry": {

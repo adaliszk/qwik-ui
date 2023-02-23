@@ -6,14 +6,13 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
+  "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
     }
   },
   "files": [
@@ -23,12 +22,13 @@
     "node": ">=16.0.0"
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --minify --sourcemap --dts",
+    "build": "rm -rf dist && tsc",
     "fmt": "prettier --write .",
     "fmt.check": "prettier --check .",
     "release": "np"
   },
   "peerDependencies": {
+    "@builder.io/qwik": "^0.19.2",
     "@storybook/addon-a11y": "^7.0.0-beta.53",
     "@storybook/addon-docs": "^7.0.0-beta.53",
     "@storybook/addon-essentials": "^7.0.0-beta.53",
@@ -36,7 +36,11 @@
     "@storybook/addon-links": "^7.0.0-beta.53",
     "@storybook/builder-vite": "^7.0.0-beta.53",
     "storybook": "^7.0.0-beta.53",
-    "storybook-framework-qwik": "^0.0.8"
+    "storybook-framework-qwik": "^0.0.8",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "vite-tsconfig-paths": "^4.0.5",
+    "vite": "^4.1.4"
   },
   "dependencies": {}
 }
