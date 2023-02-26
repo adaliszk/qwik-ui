@@ -1,3 +1,5 @@
 export * from './defineConfig';
 export * from './defineTheme';
-export * from 'storybook-framework-qwik';
+export * from './preset';
+export * from './renderer';
+export * from './types';

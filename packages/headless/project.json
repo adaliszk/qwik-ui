@@ -81,19 +81,18 @@
       }
     },
     "storybook": {
-      "executor": "nx:run-commands",
+      "executor": "nx:run-script",
       "options": {
-        "command": "storybook dev",
-        "cwd": "packages/headless"
+        "script": "storybook",
+        "path": "packages/headless"
       }
     },
     "build-storybook": {
-      "executor": "@nrwl/storybook:build",
-      "outputs": ["{options.outputDir}"],
+      "executor": "nx:run-script",
+      "outputs": ["{workspaceRoot}/storybook-static"],
       "options": {
-        "uiFramework": "@storybook/html",
-        "configDir": "packages/headless/.storybook",
-        "outputDir": "dist/storybook/headless"
+        "script": "build-storybook",
+        "path": "packages/headless"
       },
       "configurations": {
         "ci": {

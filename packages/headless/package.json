@@ -1,4 +1,5 @@
 {
+  "private": false,
   "name": "@qwik-ui/headless",
   "version": "0.1.1",
   "description": "Qwik UI headless components library",
@@ -22,7 +23,6 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "private": false,
   "scripts": {
     "build": "qwik build",
     "build.lib": "vite build --mode lib",
@@ -33,9 +33,12 @@
     "fmt.check": "prettier --check .",
     "release": "np",
     "start": "vite --open --mode ssr",
+    "storybook": "storybook dev --port 6006",
+    "build-storybook": "storybook build",
     "qwik": "qwik"
   },
   "dependencies": {
-    "@floating-ui/dom": "1.0.10"
+    "@floating-ui/dom": "^1.2.1",
+    "undici": "^5.20.0"
   }
 }

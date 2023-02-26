@@ -2,21 +2,37 @@
   "private": false,
   "name": "@qwik-ui/storybook",
   "version": "0.0.0",
-  "description": "Qwik UI components library - Material theme",
+  "description": "Qwik UI Storybooks Template",
   "publishConfig": {
     "access": "public"
   },
   "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
   "type": "module",
   "exports": {
     ".": {
+      "require": "./dist/index.js",
       "import": "./dist/index.js",
-      "require": "./dist/index.js"
+      "types": "./dist/index.d.ts"
+    },
+    "./preset": {
+      "require": "./dist/preset.js",
+      "import": "./dist/preset.js",
+      "types": "./dist/preset.d.ts"
+    },
+    "./dist/preview.js": {
+      "require": "./dist/preview.js",
+      "import": "./dist/preview.js",
+      "types": "./dist/preview.d.ts"
+    },
+    "./preview.js": {
+      "require": "./dist/preview.js",
+      "import": "./dist/preview.js",
+      "types": "./dist/preview.d.ts"
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "*.js"
   ],
   "engines": {
     "node": ">=16.0.0"
@@ -29,13 +45,14 @@
   },
   "peerDependencies": {
     "@builder.io/qwik": "^0.19.2",
-    "@storybook/addon-a11y": "^7.0.0-beta.53",
-    "@storybook/addon-docs": "^7.0.0-beta.53",
-    "@storybook/addon-essentials": "^7.0.0-beta.53",
-    "@storybook/addon-storysource": "^7.0.0-beta.53",
-    "@storybook/addon-links": "^7.0.0-beta.53",
-    "@storybook/builder-vite": "^7.0.0-beta.53",
-    "storybook": "^7.0.0-beta.53",
+    "@storybook/addon-a11y": "^7.0.0-beta.54",
+    "@storybook/addon-docs": "^7.0.0-beta.54",
+    "@storybook/addon-essentials": "^7.0.0-beta.54",
+    "@storybook/addon-storysource": "^7.0.0-beta.54",
+    "@storybook/addon-links": "^7.0.0-beta.54",
+    "@storybook/html-vite": "^7.0.0-beta.54",
+    "@storybook/builder-vite": "^7.0.0-beta.54",
+    "storybook": "^7.0.0-beta.54",
     "storybook-framework-qwik": "^0.0.8",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

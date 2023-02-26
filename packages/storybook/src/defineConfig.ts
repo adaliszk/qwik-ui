@@ -1,4 +1,4 @@
-import type { StorybookConfig } from 'storybook-framework-qwik';
+import type { StorybookConfig } from './types';
 import type { UserConfig } from 'vite';
 
 import type { PluginOptions as TsConfigPathOptions } from 'vite-tsconfig-paths';
@@ -6,6 +6,7 @@ import tsConfigPaths from 'vite-tsconfig-paths';
 
 import type { QwikVitePluginOptions } from '@builder.io/qwik/optimizer';
 import { qwikVite } from '@builder.io/qwik/optimizer';
+import { PluginOption } from 'vite';
 
 export interface CustomConfig extends StorybookConfig {
   /**
@@ -54,6 +55,11 @@ export interface CustomConfig extends StorybookConfig {
    * Configure Vite
    */
   vite?: UserConfig;
+
+  /**
+   * Add extra plugins to Vite
+   */
+  plugins?: PluginOption[];
 }
 
 /**
@@ -72,6 +78,9 @@ export interface CustomConfig extends StorybookConfig {
  * @return {StorybookConfig}
  */
 export function defineConfig(customConfig?: CustomConfig): StorybookConfig {
+  const plugins = customConfig?.plugins ?? [];
+  if ('plugins' in customConfig) delete customConfig.plugins;
+
   return {
     stories: [
       `${customConfig?.docsDir ?? '../docs'}/**/*.stories.@(js|jsx|ts|tsx)`,
@@ -79,10 +88,7 @@ export function defineConfig(customConfig?: CustomConfig): StorybookConfig {
       `${customConfig?.storiesDir ?? '../src'}/**/*.stories.@(js|jsx|ts|tsx)`,
       `${customConfig?.storiesDir ?? '../src'}/**/*.mdx`,
     ],
-    framework: {
-      name: 'storybook-framework-qwik',
-      options: {},
-    },
+    framework: '@qwik-ui/storybook',
     addons: [
       '@storybook/addon-links',
       '@storybook/addon-essentials',
@@ -111,10 +117,12 @@ export function defineConfig(customConfig?: CustomConfig): StorybookConfig {
         })
       );
 
+      // Add any custom plugins
+      plugins.reverse().forEach((plugin) => config.plugins.unshift(plugin));
+
       // Configure the development server
       config.server = customConfig?.vite?.server ?? config?.server ?? {};
-      config.server.port =
-        customConfig?.port ?? customConfig?.vite?.server?.port ?? 6006;
+      config.server.port = customConfig?.port ?? 6006;
 
       // Configure watch mode, and as a default use fsevents
       config.server.watch = { useFsEvents: true };
