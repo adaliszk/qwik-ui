@@ -58,6 +58,7 @@ importers:
       eslint-config-prettier: ^8.6.0
       eslint-plugin-cypress: ^2.12.1
       eslint-plugin-qwik: ^0.19.2
+      fsevents: ^2.3.2
       html-webpack-plugin: ^5.5.0
       husky: ^8.0.3
       jsdom: ^21.1.0
@@ -82,7 +83,7 @@ importers:
       vite: ^4.1.4
       vite-plugin-dts: ~1.7.3
       vite-plugin-eslint: ^1.8.1
-      vite-tsconfig-paths: 4.0.5
+      vite-tsconfig-paths: ^4.0.5
       vitest: ^0.28.5
     dependencies:
       tslib: 2.5.0
@@ -142,6 +143,7 @@ importers:
       eslint-config-prettier: 8.6.0_eslint@8.34.0
       eslint-plugin-cypress: 2.12.1_eslint@8.34.0
       eslint-plugin-qwik: 0.19.2_eslint@8.34.0
+      fsevents: 2.3.2
       html-webpack-plugin: 5.5.0
       husky: 8.0.3
       jsdom: 21.1.0
@@ -10401,7 +10403,6 @@ packages:
     os: [darwin]
     requiresBuild: true
     dev: true
-    optional: true
 
   /function-bind/1.1.1:
     resolution:

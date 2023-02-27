@@ -67,11 +67,11 @@
         "notes": "${notes}"
       }
     },
-    "storybook-when-it-will-work": {
+    "storybook": {
       "executor": "@nrwl/storybook:storybook",
       "options": {
         "uiFramework": "@storybook/html",
-        "port": 4400,
+        "port": 6006,
         "configDir": "packages/headless/.storybook"
       },
       "configurations": {
@@ -80,7 +80,7 @@
         }
       }
     },
-    "storybook": {
+    "run-storybook": {
       "executor": "nx:run-script",
       "options": {
         "script": "storybook",

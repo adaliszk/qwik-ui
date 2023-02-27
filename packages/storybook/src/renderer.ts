@@ -1,5 +1,5 @@
 import { render as renderQwik } from '@builder.io/qwik';
-import { ArgsStoryFn, RenderContext } from '@storybook/types';
+import type { ArgsStoryFn, RenderContext } from '@storybook/types';
 import type { QwikRenderer } from './types';
 
 // returns the Qwik component as a JSX element (</MyComponent>)
